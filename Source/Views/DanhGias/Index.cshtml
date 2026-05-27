@@ -1,0 +1,112 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.DanhGium>
+
+@{
+    ViewData["Title"] = "Danh sách đánh giá";
+}
+
+<div class="container py-5">
+
+    <!-- TITLE -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold text-danger mb-1">
+                ⭐ Danh sách đánh giá
+            </h2>
+
+            <p class="text-muted mb-0">
+                Các đánh giá từ khách hàng
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-danger rounded-3">
+
+            + Thêm đánh giá
+
+        </a>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="card border-0 shadow rounded-4">
+
+        <div class="card-body">
+
+            <table class="table align-middle table-hover">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Khách hàng</th>
+                        <th>Số sao</th>
+                        <th>Bình luận</th>
+                        <th>Ngày đánh giá</th>
+                        <th>Chức năng</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <!-- SẢN PHẨM -->
+                            <td class="fw-semibold">
+
+                                @item.MaSanPhamNavigation?.TenSanPham
+
+                            </td>
+
+                            <!-- KHÁCH HÀNG -->
+                            <td>
+
+                                @item.MaKhachHangNavigation?.HoTen
+
+                            </td>
+
+                            <!-- SỐ SAO -->
+                            <td>
+
+                                @for (int i = 1; i <= item.SoSao; i++)
+                                {
+                                    <span class="text-warning">
+                                        ★
+                                    </span>
+                                }
+
+                            </td>
+
+                            <!-- BÌNH LUẬN -->
+                            <td style="max-width:300px;">
+
+                                @item.BinhLuan
+
+                            </td>
+
+                            <!-- NGÀY -->
+                            <td>
+
+                                @item.NgayDanhGia?.ToString("dd/MM/yyyy")
+
+                            </td>
+
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.MaDanhGia" class="btn btn-warning btn-sm">Xóa bình luận</a>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

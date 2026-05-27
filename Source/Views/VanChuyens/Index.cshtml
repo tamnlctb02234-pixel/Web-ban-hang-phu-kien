@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.VanChuyen>
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold mb-4">
+        🚚 Quản lý vận chuyển
+    </h2>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>Đơn hàng</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                #@item.MaDonHang
+                            </td>
+
+                            <td>
+                                @item.DiaChiGiaoHang
+                            </td>
+
+                            <td>
+                                @item.TrangThaiVanChuyen
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.MaVanChuyen"
+                                   class="btn btn-warning btn-sm">
+
+                                    Cập nhật
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

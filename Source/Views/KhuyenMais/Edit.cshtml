@@ -1,0 +1,63 @@
+﻿@model ASM1_SOF1022.Models.KhuyenMai
+
+<div class="container mt-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body p-4">
+
+            <h2 class="fw-bold mb-4">
+                🎁 Cập nhật khuyến mãi
+            </h2>
+
+            <form method="post">
+
+                <div class="mb-3">
+
+                    <label>Tên khuyến mãi</label>
+
+                    <input asp-for="TenKhuyenMai"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Phần trăm giảm</label>
+
+                    <input asp-for="PhanTramGiam"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Ngày bắt đầu</label>
+
+                    <input asp-for="NgayBatDau"
+                           type="date"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Ngày kết thúc</label>
+
+                    <input asp-for="NgayKetThuc"
+                           type="date"
+                           class="form-control" />
+
+                </div>
+
+                <button class="btn btn-primary">
+                    Thêm
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

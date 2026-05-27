@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.DonHang>
+
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+}
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold text-danger mb-4">
+        📦 Đơn hàng của tôi
+    </h2>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body">
+
+            <table class="table align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                #@item.MaDonHang
+                            </td>
+
+                            <td>
+                                @item.NgayDatHang
+                            </td>
+
+                            <td class="fw-bold text-danger">
+
+                                @String.Format("{0:N0}",
+                                    item.TongTien) VNĐ
+
+                            </td>
+
+                            <td>
+
+                                @if (item.TrangThai == "Chờ xác nhận")
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        @item.TrangThai
+                                    </span>
+                                }
+                                else if (item.TrangThai == "Đang giao")
+                                {
+                                    <span class="badge bg-primary">
+                                        @item.TrangThai
+                                    </span>
+                                }
+                                else if (item.TrangThai == "Hoàn thành")
+                                {
+                                    <span class="badge bg-success">
+                                        @item.TrangThai
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        @item.TrangThai
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.MaDonHang"
+                                   class="btn btn-dark btn-sm">
+
+                                    Chi tiết
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.NhaCungCap>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2 class="fw-bold">
+            🏢 Nhà cung cấp
+        </h2>
+
+        <a asp-action="Create"
+           class="btn btn-primary">
+
+            + Thêm
+
+        </a>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body">
+
+            <table class="table align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Tên NCC</th>
+                        <th>SĐT</th>
+                        <th>Địa chỉ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.TenNhaCungCap</td>
+
+                            <td>@item.SoDienThoai</td>
+
+                            <td>@item.DiaChi</td>
+
+                            <td>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.MaNhaCungCap"
+                                   class="btn btn-warning btn-sm">
+
+                                    Sửa
+
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.MaNhaCungCap"
+                                   class="btn btn-danger btn-sm">
+
+                                    Xóa
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

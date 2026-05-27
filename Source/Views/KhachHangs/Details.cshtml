@@ -1,0 +1,63 @@
+﻿@model ASM1_SOF1022.Models.KhachHang
+
+@{
+    ViewData["Title"] = "Chi tiết khách hàng";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body p-5">
+
+            <h2 class="text-info mb-4">
+                👤 Chi tiết khách hàng
+            </h2>
+
+            <hr />
+
+            <p>
+                <strong>Họ tên:</strong>
+                @Model.HoTen
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                @Model.Email
+            </p>
+
+            <p>
+                <strong>SĐT:</strong>
+                @Model.SoDienThoai
+            </p>
+
+            <p>
+                <strong>Địa chỉ:</strong>
+                @Model.DiaChi
+            </p>
+
+            <p>
+                <strong>Vai trò:</strong>
+                @Model.MaVaiTroNavigation?.TenVaiTro
+            </p>
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.MaKhachHang"
+               class="btn btn-warning">
+
+                Sửa
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Quay lại
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

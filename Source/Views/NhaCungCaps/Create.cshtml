@@ -1,0 +1,52 @@
+﻿@model ASM1_SOF1022.Models.NhaCungCap
+
+<div class="container mt-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body p-4">
+
+            <h2 class="fw-bold mb-4">
+                🏢 Thêm nhà cung cấp
+            </h2>
+
+            <form method="post">
+
+                <div class="mb-3">
+
+                    <label>Tên NCC</label>
+
+                    <input asp-for="TenNhaCungCap"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Số điện thoại</label>
+
+                    <input asp-for="SoDienThoai"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Địa chỉ</label>
+
+                    <textarea asp-for="DiaChi"
+                              class="form-control"></textarea>
+
+                </div>
+
+                <button class="btn btn-primary">
+                    Thêm
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

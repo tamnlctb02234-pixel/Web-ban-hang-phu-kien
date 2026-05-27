@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.VaiTro>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2 class="fw-bold text-danger">
+            🔐 Quản lý vai trò
+        </h2>
+
+        <a asp-action="Create"
+           class="btn btn-danger">
+
+            + Thêm vai trò
+
+        </a>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body">
+
+            <table class="table align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Mã</th>
+                        <th>Tên vai trò</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.MaVaiTro
+                            </td>
+
+                            <td class="fw-semibold">
+                                @item.TenVaiTro
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.MaVaiTro"
+                                   class="btn btn-warning btn-sm">
+
+                                    Sửa
+
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.MaVaiTro"
+                                   class="btn btn-danger btn-sm">
+
+                                    Xóa
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

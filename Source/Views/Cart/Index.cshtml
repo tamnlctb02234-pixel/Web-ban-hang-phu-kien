@@ -1,0 +1,92 @@
+﻿@model List<ASM1_SOF1022.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    decimal tongTien = Model.Sum(x => x.ThanhTien);
+}
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold mb-4">
+        🛒 Giỏ hàng của bạn
+    </h2>
+
+    <table class="table table-hover align-middle">
+
+        <thead class="table-light">
+            <tr>
+                <th>Hình</th>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        <img src="~/images/@item.HinhAnh"
+                             width="80"
+                             height="80"
+                             style="object-fit:cover; border-radius:10px;" />
+                    </td>
+
+                    <td>@item.TenSanPham</td>
+
+                    <td>
+                        @String.Format("{0:N0}", item.Gia) VNĐ
+                    </td>
+
+                    <td>@item.SoLuong</td>
+
+                    <td class="text-danger fw-bold">
+                        @String.Format("{0:N0}", item.ThanhTien) VNĐ
+                    </td>
+
+                    <td>
+
+                        <a asp-action="Remove"
+                           asp-route-id="@item.MaSanPham"
+                           class="btn btn-danger btn-sm">
+
+                            Xóa
+
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <div class="text-end mt-4">
+
+        <h4 class="fw-bold">
+            Tổng tiền:
+            <span class="text-danger">
+                @String.Format("{0:N0}", tongTien) VNĐ
+            </span>
+        </h4>
+
+    </div>
+    <div class="text-end mt-3">
+
+        <a asp-action="Checkout"
+           class="btn btn-success btn-lg">
+
+            Thanh toán
+
+        </a>
+
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+﻿@model ASM1_SOF1022.Models.KhachHang
+
+@{
+    ViewData["Title"] = "Xóa khách hàng";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body p-5 text-center">
+
+            <h2 class="text-danger mb-4">
+                🗑️ Xóa khách hàng
+            </h2>
+
+            <h4>
+                Bạn có chắc muốn xóa khách hàng này không?
+            </h4>
+
+            <hr />
+
+            <p><strong>Họ tên:</strong> @Model.HoTen</p>
+
+            <p><strong>Email:</strong> @Model.Email</p>
+
+            <form asp-action="Delete">
+
+                <input type="hidden"
+                       asp-for="MaKhachHang" />
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    Xóa
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Quay lại
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

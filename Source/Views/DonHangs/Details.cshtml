@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.ChiTietDonHang>
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold mb-4">
+        🧾 Chi tiết đơn hàng
+    </h2>
+
+    <table class="table table-bordered">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @item.MaSanPhamNavigation.TenSanPham
+                    </td>
+
+                    <td>
+                        @item.Gia?.ToString("N0") đ
+                    </td>
+
+                    <td>
+                        @item.SoLuong
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

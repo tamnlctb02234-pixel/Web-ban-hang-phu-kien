@@ -1,0 +1,600 @@
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Bear & Bunny</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <style>
+
+    body {
+        background: #fff8fb;
+        font-family: 'Segoe UI', sans-serif;
+        color: #444;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
+    .navbar-custom {
+        background: rgba(255,255,255,0.88);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        padding: 14px 0;
+        border-bottom: 1px solid #ffe4ef;
+    }
+
+    .navbar-brand {
+        font-size: 32px;
+        font-weight: 800;
+        color: #ff4d8d !important;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+
+    .navbar-brand:hover {
+        transform: scale(1.03);
+    }
+
+    /* ===== NAV LINK ===== */
+
+    .navbar-nav .nav-link {
+        position: relative;
+        color: #555 !important;
+        font-weight: 600;
+        margin-left: 14px;
+        transition: 0.3s;
+        padding: 10px 14px !important;
+        border-radius: 12px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ff4d8d !important;
+        background-color: #fff0f6;
+    }
+
+    .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 14px;
+        bottom: 6px;
+        width: 0%;
+        height: 2px;
+        background: #ff4d8d;
+        transition: 0.3s;
+        border-radius: 10px;
+    }
+
+    .navbar-nav .nav-link:hover::after {
+        width: 60%;
+    }
+
+    /* ===== BUTTON PINK ===== */
+
+    .btn-pink {
+        background: linear-gradient(135deg, #ff4d8d, #ff7eb3);
+        color: white !important;
+        border-radius: 14px;
+        padding: 10px 18px !important;
+        border: none;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(255,77,141,0.25);
+    }
+
+    .btn-pink:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255,77,141,0.35);
+    }
+
+    /* ===== ADMIN BUTTON ===== */
+
+    .admin-btn {
+        background: #222;
+        color: white !important;
+        border-radius: 14px;
+        padding: 10px 18px !important;
+        border: none;
+        transition: 0.3s;
+        font-weight: 600;
+    }
+
+    .admin-btn:hover {
+        background: #000;
+        transform: translateY(-2px);
+    }
+
+    /* ===== DROPDOWN ===== */
+
+    .dropdown-menu {
+        border: none;
+        border-radius: 18px;
+        padding: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        animation: dropdownFade 0.2s ease;
+    }
+
+    .dropdown-item {
+        border-radius: 12px;
+        padding: 11px 15px;
+        font-weight: 500;
+        transition: 0.25s;
+    }
+
+    .dropdown-item:hover {
+        background: #fff0f6;
+        color: #ff4d8d;
+        transform: translateX(4px);
+    }
+
+    @@keyframes dropdownFade {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ===== USER NAME ===== */
+
+    .user-name {
+        color: #ff4d8d !important;
+        font-weight: 700;
+        background: #fff0f6;
+        padding: 10px 16px;
+        border-radius: 14px;
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    main {
+        min-height: 80vh;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    .footer-custom {
+        background: white;
+        border-top: 1px solid #ffe3ee;
+        margin-top: 80px;
+        padding-top: 50px;
+    }
+
+    .footer-title {
+        color: #ff4d8d;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .footer-link {
+        display: block;
+        color: #666;
+        text-decoration: none;
+        margin-bottom: 12px;
+        transition: 0.3s;
+    }
+
+    .footer-link:hover {
+        color: #ff4d8d;
+        padding-left: 6px;
+    }
+
+    /* ===== SOCIAL ===== */
+
+    .social-icon {
+        width: 44px;
+        height: 44px;
+        background: #fff0f6;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ff4d8d;
+        text-decoration: none;
+        margin-right: 10px;
+        transition: 0.3s;
+        font-size: 18px;
+    }
+
+    .social-icon:hover {
+        background: #ff4d8d;
+        color: white;
+        transform: translateY(-4px);
+    }
+
+    .copyright {
+        border-top: 1px solid #eee;
+        margin-top: 30px;
+        padding: 18px 0;
+        color: #888;
+        font-size: 14px;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-custom">
+
+            <div class="container">
+
+                <!-- LOGO -->
+                <a class="navbar-brand"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    🧸 Bear & Bunny
+
+                </a>
+
+                <!-- MOBILE BUTTON -->
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarMenu">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <!-- MENU -->
+                <div class="collapse navbar-collapse"
+                     id="navbarMenu">
+
+                    <!-- LEFT MENU -->
+                    <ul class="navbar-nav mx-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Index">
+
+                                Trang chủ
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Shop"
+                               asp-action="Index">
+
+                                Sản phẩm
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="DanhMucs"
+                               asp-action="Index">
+
+                                Danh mục
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#">
+
+                                Liên hệ
+
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <!-- RIGHT MENU -->
+                    <ul class="navbar-nav align-items-lg-center">
+
+                        <!-- GIỎ HÀNG -->
+                        <li class="nav-item me-2">
+
+                            <a class="nav-link btn-pink text-end"
+                               asp-controller="Cart"
+                               asp-action="Index">
+
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                Giỏ hàng
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- ADMIN -->
+                        @if (Context.Session.GetInt32("RoleID") == 1)
+                        {
+                            <li class="nav-item dropdown ms-2">
+
+                                <a class="btn btn-dark admin-btn dropdown-toggle"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown">
+
+                                    ⚙ Admin
+
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="Admin"
+                                           asp-action="Index">
+
+                                            📊 Dashboard
+
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="SanPhams"
+                                           asp-action="Index">
+
+                                            🧸 Sản phẩm
+
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="DonHangs"
+                                           asp-action="Index">
+
+                                            📦 Đơn hàng
+
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="KhachHangs"
+                                           asp-action="Index">
+
+                                            👤 Khách hàng
+
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="KhuyenMais"
+                                           asp-action="Index">
+
+                                            🎁 Khuyến mãi
+
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="KhoHangs"
+                                           asp-action="Index">
+
+                                            📦 Kho hàng
+
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+                        }
+
+                        <!-- LOGIN / USER -->
+                        @if (Context.Session.GetString("UserName") == null)
+                        {
+                            <li class="nav-item ms-2">
+
+                                <a class="nav-link btn-pink"
+                                   asp-controller="Account"
+                                   asp-action="Login">
+
+                                    <i class="fa-solid fa-user"></i>
+                                    Đăng nhập
+
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item ms-2">
+
+                                <a class="nav-link"
+                                   asp-controller="Account"
+                                   asp-action="Register">
+
+                                    Đăng ký
+
+                                </a>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown ms-2">
+
+                                <a class="nav-link dropdown-toggle user-name"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown">
+
+                                    👤 @Context.Session.GetString("UserName")
+
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="DonHangs"
+                                           asp-action="MyOrders">
+
+                                            📦 Đơn hàng của tôi
+
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="Account"
+                                           asp-action="Logout">
+
+                                            🚪 Đăng xuất
+
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- ===== CONTENT ===== -->
+
+    <div class="container-fluid p-0">
+
+        <main role="main">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+
+    <footer class="footer-custom">
+
+        <div class="container">
+
+            <div class="row">
+
+                <!-- SHOP -->
+                <div class="col-md-4 mb-4">
+
+                    <h5 class="footer-title">
+                        🧸 Bear & Bunny
+                    </h5>
+
+                    <p class="text-muted">
+                        Shop chuyên bán gấu bông và phụ kiện đáng yêu,
+                        mang đến sự dễ thương cho mọi người.
+                    </p>
+
+                </div>
+
+                <!-- MENU -->
+                <div class="col-md-4 mb-4">
+
+                    <h5 class="footer-title">
+                        Menu
+                    </h5>
+
+                    <a href="/" class="footer-link">
+                        Trang chủ
+                    </a>
+
+                    <a href="/Shop" class="footer-link">
+                        Sản phẩm
+                    </a>
+
+                    <a href="/Cart" class="footer-link">
+                        Giỏ hàng
+                    </a>
+
+                </div>
+
+                <!-- SOCIAL -->
+                <div class="col-md-4 mb-4">
+
+                    <h5 class="footer-title">
+                        Theo dõi chúng tôi
+                    </h5>
+
+                    <div class="mt-3">
+
+                        <a href="#" class="social-icon">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+
+                        <a href="#" class="social-icon">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+
+                        <a href="#" class="social-icon">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- COPYRIGHT -->
+            <div class="text-center copyright">
+
+                © 2026 Bear & Bunny - Shop bán phụ kiện & gấu bông
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

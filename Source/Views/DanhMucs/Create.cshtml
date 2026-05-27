@@ -1,0 +1,89 @@
+﻿@model ASM1_SOF1022.Models.DanhMuc
+
+@{
+    ViewData["Title"] = "Thêm danh mục";
+}
+
+<style>
+
+    body {
+        background-color: #fffafc;
+    }
+
+    .create-box {
+        background: white;
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(255, 77, 141, 0.08);
+    }
+
+    .title {
+        color: #ff4d8d;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+    .btn-pink {
+        background: #ff4d8d;
+        border: none;
+        color: white;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+
+</style>
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="create-box">
+
+                <h2 class="title mb-4">
+                    ➕ Thêm danh mục
+                </h2>
+
+                <form asp-action="Create">
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Tên danh mục
+                        </label>
+
+                        <input asp-for="TenDanhMuc"
+                               class="form-control"
+                               placeholder="Nhập tên danh mục..." />
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-pink">
+
+                        Thêm danh mục
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        Quay lại
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

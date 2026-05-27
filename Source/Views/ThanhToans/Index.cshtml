@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.ThanhToan>
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold mb-4">
+        💳 Quản lý thanh toán
+    </h2>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body">
+
+            <table class="table align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Đơn hàng</th>
+                        <th>Phương thức</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.MaThanhToan</td>
+
+                            <td>
+                                #@item.MaDonHang
+                            </td>
+
+                            <td>
+                                @item.PhuongThucThanhToan
+                            </td>
+
+                            <td>
+                                @item.TrangThaiThanhToan
+                            </td>
+
+                            <td>
+                                @item.NgayThanhToan
+                            </td>
+
+                            <td>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.MaThanhToan"
+                                   class="btn btn-warning btn-sm">
+
+                                    Cập nhật
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

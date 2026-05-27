@@ -1,0 +1,143 @@
+﻿@model ASM1_SOF1022.Models.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+                <!-- HEADER -->
+                <div class="bg-light p-4 text-center border-bottom">
+
+                    <h2 class="fw-bold mb-1 text-danger">
+                        🧾 Thanh toán đơn hàng
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Vui lòng nhập thông tin nhận hàng
+                    </p>
+
+                </div>
+
+                <!-- BODY -->
+                <div class="card-body p-5">
+
+                    <form asp-action="Checkout" method="post">
+
+                        <!-- HỌ TÊN -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Họ tên người nhận
+                            </label>
+
+                            <input asp-for="HoTen"
+                                   class="form-control form-control-lg rounded-3"
+                                   placeholder="Nhập họ tên..." />
+
+                            <span asp-validation-for="HoTen"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- SĐT -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Số điện thoại
+                            </label>
+
+                            <input asp-for="SoDienThoai"
+                                   class="form-control form-control-lg rounded-3"
+                                   placeholder="Nhập số điện thoại..." />
+
+                            <span asp-validation-for="SoDienThoai"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- ĐỊA CHỈ -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Địa chỉ giao hàng
+                            </label>
+
+                            <textarea asp-for="DiaChiGiaoHang"
+                                      rows="4"
+                                      class="form-control rounded-3"
+                                      placeholder="Nhập địa chỉ giao hàng..."></textarea>
+
+                            <span asp-validation-for="DiaChiGiaoHang"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- PHƯƠNG THỨC THANH TOÁN -->
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Phương thức thanh toán
+                            </label>
+
+                            <select asp-for="PhuongThucThanhToan"
+                                    class="form-select form-select-lg rounded-3">
+
+                                <option value="">
+                                    -- Chọn phương thức --
+                                </option>
+
+                                <option value="COD">
+                                    Thanh toán khi nhận hàng (COD)
+                                </option>
+
+                                <option value="Chuyển khoản">
+                                    Chuyển khoản ngân hàng
+                                </option>
+
+                                <option value="Ví điện tử">
+                                    Ví điện tử
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="PhuongThucThanhToan"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="d-grid">
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg rounded-3 fw-semibold">
+
+                                🛍️ Xác nhận đặt hàng
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
