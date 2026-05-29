@@ -1,0 +1,164 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.DonHang>
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+}
+
+<style>
+
+    .page-title {
+        color: #ff4d8d;
+        font-weight: bold;
+    }
+
+    .table-custom {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .table thead {
+        background: #ff4d8d;
+        color: white;
+    }
+
+    .status {
+        padding: 8px 14px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .success {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .cancel {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+</style>
+
+<div class="container py-5">
+
+    <h2 class="page-title mb-4">
+        📦 Quản lý đơn hàng
+    </h2>
+
+    <div class="table-responsive table-custom">
+
+        <table class="table align-middle mb-0">
+
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th width="320">Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            #@item.MaDonHang
+                        </td>
+
+                        <td>
+                            @item.MaKhachHangNavigation?.HoTen
+                        </td>
+
+                        <td>
+                            @item.NgayDatHang
+                        </td>
+
+                        <td class="fw-bold text-danger">
+                            @String.Format("{0:N0}", item.TongTien) VNĐ
+                        </td>
+
+                        <td>
+
+                            @if (item.TrangThai == "Chờ xác nhận")
+                            {
+                                <span class="status pending">
+                                    ⏳ @item.TrangThai
+                                </span>
+                            }
+                            else if (item.TrangThai == "Đã giao")
+                            {
+                                <span class="status success">
+                                    ✅ @item.TrangThai
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status cancel">
+                                    ❌ @item.TrangThai
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.MaDonHang"
+                               class="btn btn-dark btn-sm">
+
+                                Chi tiết
+
+                            </a>
+
+                            <a asp-action="UpdateStatus"
+                               asp-route-id="@item.MaDonHang"
+                               asp-route-status="Đã giao"
+                               class="btn btn-success btn-sm">
+
+                                Đã giao
+
+                            </a>
+
+                            <a asp-action="UpdateStatus"
+                               asp-route-id="@item.MaDonHang"
+                               asp-route-status="Đã hủy"
+                               class="btn btn-warning btn-sm">
+
+                                Hủy
+
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.MaDonHang"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?')">
+
+                                Xóa
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

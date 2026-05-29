@@ -6,53 +6,142 @@
 
 <style>
 
+    body {
+        background-color: #fff8fb;
+    }
+
+    /* HERO */
+
     .hero {
-        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/images/banner.jpg');
-        background-size: cover;
-        background-position: center;
-        height: 500px;
+        background: linear-gradient(135deg, #ffb6d5, #ffd6e7);
+        height: 420px;
         border-radius: 0 0 40px 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
         text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+
+        position: relative;
+        z-index: 1;
     }
 
+        .hero::before {
+            content: "🧸";
+            position: absolute;
+            font-size: 220px;
+            opacity: 0.08;
+            left: 8%;
+            top: 40px;
+        }
+
+        .hero::after {
+            content: "🎀";
+            position: absolute;
+            font-size: 180px;
+            opacity: 0.08;
+            right: 10%;
+            bottom: 30px;
+        }
+
         .hero h1 {
-            font-size: 60px;
+            font-size: 70px;
             font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
         }
 
     .btn-shop {
-        background-color: #ff4d8d;
-        color: white;
-        padding: 12px 28px;
-        border-radius: 15px;
-        border: none;
+        background: white;
+        color: #ff4d8d;
+        padding: 14px 34px;
+        border-radius: 50px;
         text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
 
         .btn-shop:hover {
-            background-color: #ff2f78;
+            background: #ff4d8d;
             color: white;
+            transform: translateY(-3px);
         }
+
+    /* TITLE */
+
+    .section-title h2 {
+        color: #ff4d8d;
+        font-weight: bold;
+        font-size: 38px;
+    }
+
+    .section-title p {
+        color: gray;
+    }
+
+    /* PRODUCT */
 
     .product-card {
         border: none;
-        border-radius: 20px;
+        border-radius: 25px;
         overflow: hidden;
         transition: 0.3s;
+        background: white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 
     .product-img {
         height: 250px;
         object-fit: cover;
+        transition: 0.3s;
     }
+
+    .product-card:hover .product-img {
+        transform: scale(1.05);
+    }
+
+    .badge-category {
+        background: #ffe0ec;
+        color: #ff2f78;
+        padding: 8px 14px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .price {
+        color: #ff2f78;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .btn-detail {
+        background: linear-gradient(45deg, #ff4d8d, #ff7aa8);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        padding: 12px;
+        text-decoration: none;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+        .btn-detail:hover {
+            opacity: 0.9;
+            color: white;
+        }
 
 </style>
 
@@ -66,17 +155,15 @@
             🧸 Bear & Bunny
         </h1>
 
-        <p class="lead mb-4">
-
-            Bộ sưu tập phụ kiện siêu đáng yêu dành cho bạn
-
+        <p>
+            Phụ kiện dễ thương dành riêng cho bạn ✨
         </p>
 
         <a asp-controller="Shop"
            asp-action="Index"
            class="btn-shop">
 
-            Mua ngay
+            Mua ngay 💖
 
         </a>
 
@@ -88,18 +175,14 @@
 
 <div class="container py-5">
 
-    <div class="text-center mb-5">
+    <div class="section-title text-center mb-5">
 
-        <h2 class="fw-bold text-danger">
-
+        <h2>
             ✨ Sản phẩm nổi bật
-
         </h2>
 
-        <p class="text-muted">
-
+        <p>
             Những sản phẩm được yêu thích nhất
-
         </p>
 
     </div>
@@ -108,20 +191,28 @@
 
         @foreach (var item in Model)
         {
-            <div class="col-md-3">
+            <div class="col-lg-3 col-md-6">
 
-                <div class="card shadow-sm product-card h-100">
+                <div class="card product-card h-100">
 
-                    <img src="~/images/@item.HinhAnh"
-                         class="card-img-top product-img" />
+                    <div class="overflow-hidden">
+
+                        <img src="~/images/@item.HinhAnh"
+                             class="card-img-top product-img" />
+
+                    </div>
 
                     <div class="card-body d-flex flex-column">
 
-                        <span class="badge bg-danger mb-2">
+                        <div class="mb-3">
 
-                            @item.MaDanhMucNavigation?.TenDanhMuc
+                            <span class="badge-category">
 
-                        </span>
+                                @item.MaDanhMucNavigation?.TenDanhMuc
+
+                            </span>
+
+                        </div>
 
                         <h5 class="fw-bold">
 
@@ -135,16 +226,16 @@
 
                         </p>
 
-                        <h5 class="text-danger fw-bold">
+                        <div class="price mb-3">
 
                             @String.Format("{0:N0}", item.Gia) VNĐ
 
-                        </h5>
+                        </div>
 
                         <a asp-controller="Shop"
                            asp-action="Details"
                            asp-route-id="@item.MaSanPham"
-                           class="btn btn-danger mt-3">
+                           class="btn-detail">
 
                             Xem chi tiết
 

@@ -33,50 +33,37 @@
 
         <div class="col-md-3">
 
-            <div class="card border-0 shadow rounded-4">
+            <a asp-controller="SanPhams"
+                asp-action="Index"
+                class="text-decoration-none">
 
-                <div class="card-body text-center p-4">
-
-                    <div class="fs-1">
-                        🛍️
-                    </div>
-
-                    <h2 class="fw-bold mt-3">
-                        @ViewBag.TotalProducts
-                    </h2>
-
-                    <p class="text-muted">
+                <div class="admin-box bg-light">
+                    🛍️
+                    <p class="mt-2 mb-0">
                         Sản phẩm
                     </p>
-
                 </div>
 
-            </div>
+            </a>
 
         </div>
 
 
         <div class="col-md-3">
 
-            <div class="card border-0 shadow rounded-4">
+            <a asp-controller="DonHangs" 
+                class="text-decoration-none">
 
-                <div class="card-body text-center p-4">
+                
 
-                    <div class="fs-1">
+                <div class="admin-box bg-light">
                         📦
-                    </div>
-
-                    <h2 class="fw-bold mt-3">
-                        @ViewBag.TotalOrders
-                    </h2>
-
-                    <p class="text-muted">
+                    <p class="mt-2 mb-0">
                         Đơn hàng
                     </p>
-
                 </div>
 
-            </div>
+            </a>
 
         </div>
 
@@ -104,25 +91,18 @@
 
         <div class="col-md-3">
 
-            <div class="card border-0 shadow rounded-4">
+            <a asp-controller="DanhGias"
+                asp-action="Index"
+                class="text-decoration-none">
 
-                <div class="card-body text-center p-4">
-
-                    <div class="fs-1">
-                        ⭐
-                    </div>
-
-                    <h2 class="fw-bold mt-3">
-                        @ViewBag.TotalReviews
-                    </h2>
-
-                    <p class="text-muted">
+                <div class="admin-box bg-light">
+                    ⭐
+                    <p class="mt-2 mb-0">
                         Đánh giá
                     </p>
-
                 </div>
 
-            </div>
+            </a>
 
         </div>
 
