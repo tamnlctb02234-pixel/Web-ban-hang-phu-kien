@@ -55,5 +55,17 @@ namespace ASM1_SOF1022.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        public IActionResult LowStock()
+        {
+            var ds = _context.KhoHangs
+                .Include(x => x.MaSanPhamNavigation)
+                .Where(x => x.SoLuongTon < 10)
+                .OrderBy(x => x.SoLuongTon)
+                .ToList();
+
+            return View(ds);
+        }
     }
 }

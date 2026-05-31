@@ -32,9 +32,11 @@ namespace ASM1_SOF1022.Controllers
         }
 
         // FORM THÊM
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             ViewBag.DanhMucs = _context.DanhMucs.ToList();
+            ViewBag.NhaCungCaps = _context.NhaCungCaps.ToList();
+            ViewBag.KhuyenMais = _context.KhuyenMais.ToList();
 
             return View();
         }
@@ -45,9 +47,23 @@ namespace ASM1_SOF1022.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Thêm sản phẩm
                 _context.SanPhams.Add(sanPham);
+                await _context.SaveChangesAsync();
+
+                // Tạo kho hàng tương ứng
+                var kho = new KhoHang
+                {
+                    MaSanPham = sanPham.MaSanPham,
+                    SoLuongTon = sanPham.SoLuong,
+                    NgayCapNhat = DateTime.Now
+                };
+
+                _context.KhoHangs.Add(kho);
 
                 await _context.SaveChangesAsync();
+
+                TempData["success"] = "Thêm sản phẩm thành công";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -62,7 +78,14 @@ namespace ASM1_SOF1022.Controllers
         {
             var sanPham = await _context.SanPhams.FindAsync(id);
 
+            if(sanPham == null)
+            {
+                return NotFound();
+            }
+
             ViewBag.DanhMucs = _context.DanhMucs.ToList();
+            ViewBag.NhaCungCaps = _context.NhaCungCaps.ToList();
+            ViewBag.KhuyenMais = _context.KhuyenMais.ToList();
 
             return View(sanPham);
         }
@@ -80,7 +103,18 @@ namespace ASM1_SOF1022.Controllers
             {
                 _context.Update(sanPham);
 
+                var kho = await _context.KhoHangs
+                    .FirstOrDefaultAsync(x => x.MaSanPham == sanPham.MaSanPham);
+
+                if (kho != null)
+                {
+                    kho.SoLuongTon = sanPham.SoLuong;
+                    kho.NgayCapNhat = DateTime.Now;
+                }
+
                 await _context.SaveChangesAsync();
+
+                TempData["success"] = "Cập nhật sản phẩm thành công";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -95,38 +129,43 @@ namespace ASM1_SOF1022.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var sanPham = await _context.SanPhams
-                .FindAsync(id);
+                .FirstOrDefaultAsync(x => x.MaSanPham == id);
 
             if (sanPham == null)
             {
                 return NotFound();
             }
 
-            // Xóa chi tiết đơn hàng liên quan
-            var chiTiet = _context.ChiTietDonHangs
-                .Where(x => x.MaSanPham == id)
-                .ToList();
+            // Chi tiết đơn hàng
+            var chiTietDonHang = _context.ChiTietDonHangs
+                .Where(x => x.MaSanPham == id);
 
-            _context.ChiTietDonHangs.RemoveRange(chiTiet);
+            _context.ChiTietDonHangs.RemoveRange(chiTietDonHang);
 
-            // Xóa kho hàng liên quan
-            var khoHang = _context.KhoHangs
-                .Where(x => x.MaSanPham == id)
-                .ToList();
+            // Chi tiết phiếu nhập
+            var chiTietNhap = _context.ChiTietPhieuNhaps
+                .Where(x => x.MaSanPham == id);
 
-            _context.KhoHangs.RemoveRange(khoHang);
+            _context.ChiTietPhieuNhaps.RemoveRange(chiTietNhap);
 
-            // Xóa đánh giá liên quan
+            // Đánh giá
             var danhGia = _context.DanhGia
-                .Where(x => x.MaSanPham == id)
-                .ToList();
+                .Where(x => x.MaSanPham == id);
 
             _context.DanhGia.RemoveRange(danhGia);
 
-            // Xóa sản phẩm
+            // Kho hàng
+            var khoHang = _context.KhoHangs
+                .Where(x => x.MaSanPham == id);
+
+            _context.KhoHangs.RemoveRange(khoHang);
+
+            // Sản phẩm
             _context.SanPhams.Remove(sanPham);
 
             await _context.SaveChangesAsync();
+
+            TempData["success"] = "Xóa sản phẩm thành công";
 
             return RedirectToAction(nameof(Index));
         }

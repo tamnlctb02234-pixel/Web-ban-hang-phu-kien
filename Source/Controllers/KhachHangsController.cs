@@ -181,12 +181,36 @@ namespace ASM1_SOF1022.Controllers
         {
             var khachHang = await _context.KhachHangs.FindAsync(id);
 
-            if (khachHang != null)
+            if (khachHang == null)
             {
-                _context.KhachHangs.Remove(khachHang);
-
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
+
+            // Nếu có đơn hàng thì không cho xóa
+            bool coDonHang = await _context.DonHangs
+                .AnyAsync(x => x.MaKhachHang == id);
+
+            if (coDonHang)
+            {
+                TempData["error"] =
+                    "Khách hàng đã phát sinh đơn hàng nên không thể xóa.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Xóa các đánh giá của khách hàng
+            var danhGia = await _context.DanhGia
+                .Where(x => x.MaKhachHang == id)
+                .ToListAsync();
+
+            _context.DanhGia.RemoveRange(danhGia);
+
+            // Xóa khách hàng
+            _context.KhachHangs.Remove(khachHang);
+
+            await _context.SaveChangesAsync();
+
+            TempData["success"] = "Xóa khách hàng thành công.";
 
             return RedirectToAction(nameof(Index));
         }

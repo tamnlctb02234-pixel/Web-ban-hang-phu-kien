@@ -1,0 +1,80 @@
+﻿@{
+    var pn = ViewBag.PhieuNhap;
+    var chiTiet = ViewBag.ChiTiet as List<ASM1_SOF1022.Models.ChiTietPhieuNhap>;
+}
+
+<div class="container mt-5">
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-header bg-white">
+            <h4 class="mb-0">
+                📦 Chi tiết sản phẩm nhập
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Mã SP</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá nhập</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in chiTiet)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.MaSanPham
+                            </td>
+
+                            <td>
+                                @item.MaSanPhamNavigation.TenSanPham
+                            </td>
+
+                            <td>
+                                @item.SoLuong
+                            </td>
+
+                            <td>
+                                @String.Format("{0:N0}", item.GiaNhap) VNĐ
+                            </td>
+
+                            <td>
+                                @String.Format("{0:N0}",
+                                         item.SoLuong * item.GiaNhap)
+                                VNĐ
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <a asp-action="Index"
+           class="btn btn-secondary rounded-pill">
+
+            ← Quay lại
+
+        </a>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.KhoHang>
+
+@{
+    ViewData["Title"] = "Sản phẩm sắp hết hàng";
+}
+
+<style>
+
+    .title {
+        color: #ff4d8d;
+        font-weight: bold;
+    }
+
+    .table-box {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .table thead {
+        background: #ff4d8d;
+        color: white;
+    }
+
+    .product-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .warning-badge {
+        background: #fff3cd;
+        color: #856404;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+</style>
+
+<div class="container py-5">
+
+    <h2 class="title mb-4">
+
+        ⚠️ Sản phẩm sắp hết hàng
+
+    </h2>
+
+    <div class="table-responsive table-box">
+
+        <table class="table align-middle mb-0">
+
+            <thead>
+
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng tồn</th>
+                    <th>Ngày cập nhật</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td width="120">
+
+                            <img src="~/images/@item.MaSanPhamNavigation?.HinhAnh"
+                                 class="product-img" />
+
+                        </td>
+
+                        <td>
+
+                            @item.MaSanPhamNavigation?.TenSanPham
+
+                        </td>
+
+                        <td>
+
+                            <span class="warning-badge">
+
+                                @item.SoLuongTon sản phẩm
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            @item.NgayCapNhat
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

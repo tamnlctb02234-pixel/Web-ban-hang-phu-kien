@@ -1,0 +1,133 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.PhieuNhap>
+
+@{
+    ViewData["Title"] = "Phiếu nhập kho";
+}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title">
+            📥 Phiếu nhập kho
+        </h2>
+
+        <a asp-action="Create"
+           class="btn btn-success rounded-pill">
+            + Tạo phiếu nhập
+        </a>
+
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body text-center">
+
+                    <h6>Tổng phiếu nhập</h6>
+
+                    <h3 class="text-danger">
+                        @Model.Count()
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body text-center">
+
+                    <h6>Tổng giá trị nhập</h6>
+
+                    <h3 class="text-success">
+
+                        @String.Format("{0:N0}",
+                            Model.Sum(x => x.TongTien))
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="table-responsive table-box">
+
+        <table class="table align-middle mb-0">
+
+            <thead>
+
+                <tr>
+
+                    <th>Mã phiếu</th>
+                    <th>Nhà cung cấp</th>
+                    <th>Ngày nhập</th>
+                    <th>Tổng tiền</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+
+                            <strong>
+                                #PN@(item.MaPhieuNhap.ToString("000"))
+                            </strong>
+
+                        </td>
+
+                        <td>
+                            @item.MaNhaCungCapNavigation?.TenNhaCungCap
+                        </td>
+
+                        <td>
+                            @item.NgayNhap?.ToString("dd/MM/yyyy")
+                        </td>
+
+                        <td class="money">
+
+                            @String.Format("{0:N0}",
+                                item.TongTien) VNĐ
+
+                        </td>
+
+                        <td>
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.MaPhieuNhap"
+                               class="btn btn-dark btn-sm rounded-pill">
+
+                                Xem chi tiết
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
