@@ -95,7 +95,11 @@
                             </td>
 
                             <td>
-                                <a asp-action="Delete" asp-route-id="@item.MaDanhGia" class="btn btn-warning btn-sm">Xóa bình luận</a>
+                                <a href="@Url.Action("Delete", "DanhGias", new { id = item.MaDanhGia })"
+                                   class="btn btn-warning btn-sm"
+                                   onclick="return confirm('Bạn có chắc muốn xóa bình luận này không?')">
+                                    Xóa bình luận
+                                </a>
                             </td>
 
                         </tr>

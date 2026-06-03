@@ -20,6 +20,7 @@ namespace ASM1_SOF1022.Controllers
                 .Include(x => x.MaDanhMucNavigation)
                 .Include(x => x.MaKhuyenMaiNavigation)
                 .Include(x => x.MaNhaCungCapNavigation)
+                .OrderByDescending(x => x.MaSanPham)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(search))

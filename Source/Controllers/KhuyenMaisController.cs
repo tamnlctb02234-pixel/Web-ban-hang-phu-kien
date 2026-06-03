@@ -56,13 +56,27 @@ namespace ASM1_SOF1022.Controllers
         // DELETE
         public IActionResult Delete(int id)
         {
+            bool dangDuocSuDung = _context.SanPhams
+                .Any(x => x.MaKhuyenMai == id);
+
+            if (dangDuocSuDung)
+            {
+                TempData["error"] =
+                    "Khuyến mãi đang được áp dụng cho sản phẩm nên không thể xóa.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
             var km = _context.KhuyenMais.Find(id);
 
             _context.KhuyenMais.Remove(km);
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index");
+            TempData["success"] =
+                "Xóa khuyến mãi thành công.";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

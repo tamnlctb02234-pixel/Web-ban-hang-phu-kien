@@ -28,34 +28,32 @@ namespace ASM1_SOF1022.Controllers
         public IActionResult Create()
         {
             ViewBag.SanPhams = _context.SanPhams.ToList();
+            ViewBag.KhachHangs = _context.KhachHangs.ToList();
 
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DanhGium model)
         {
-            int? userId =
-                HttpContext.Session.GetInt32("UserID");
-
-            if (userId == null)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Login", "Account");
+                model.NgayDanhGia = DateTime.Now;
+
+                _context.DanhGia.Add(model);
+
+                await _context.SaveChangesAsync();
+
+                TempData["success"] = "Thêm đánh giá thành công";
+
+                return RedirectToAction(nameof(Index));
             }
 
-            model.MaKhachHang = userId.Value;
+            ViewBag.SanPhams = _context.SanPhams.ToList();
+            ViewBag.KhachHangs = _context.KhachHangs.ToList();
 
-            model.NgayDanhGia = DateTime.Now;
-
-            _context.DanhGia.Add(model);
-
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(
-                "Details",
-                "SanPhams",
-                new { id = model.MaSanPham }
-            );
+            return View(model);
         }
 
 
@@ -78,12 +76,12 @@ namespace ASM1_SOF1022.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             // CHECK ADMIN
-            var role = HttpContext.Session.GetString("Role");
+            //var role = HttpContext.Session.GetString("Role");
 
-            if (role != "Admin")
-            {
-                return RedirectToAction("AccessDenied", "Account");
-            }
+            //if (role != "Admin")
+            //{
+            //    return RedirectToAction("AccessDenied", "Account");
+            //}
 
             var danhGia = await _context.DanhGia
                 .FindAsync(id);

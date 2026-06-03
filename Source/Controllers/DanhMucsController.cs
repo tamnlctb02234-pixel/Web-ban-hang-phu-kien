@@ -115,16 +115,30 @@ namespace ASM1_SOF1022.Controllers
             }
 
             var danhMuc = await _context.DanhMucs
-                .FirstOrDefaultAsync(m => m.MaDanhMuc == id);
+                .FirstOrDefaultAsync(x => x.MaDanhMuc == id);
 
             if (danhMuc == null)
             {
                 return NotFound();
             }
 
+            bool coSanPham = await _context.SanPhams
+                .AnyAsync(x => x.MaDanhMuc == id);
+
+            if (coSanPham)
+            {
+                TempData["error"] =
+                    "Không thể xóa danh mục vì đang có sản phẩm thuộc danh mục này.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
             _context.DanhMucs.Remove(danhMuc);
 
             await _context.SaveChangesAsync();
+
+            TempData["success"] =
+                "Xóa danh mục thành công.";
 
             return RedirectToAction(nameof(Index));
         }

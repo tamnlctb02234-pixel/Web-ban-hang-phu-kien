@@ -141,12 +141,12 @@
 
                             </a>
 
-                            <a asp-action="Delete"
+                            <a asp-action="UpdateStatus"
                                asp-route-id="@item.MaDonHang"
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?')">
+                               asp-route-status="Chờ xác nhận"
+                               class="btn btn-primary btn-sm">
 
-                                Xóa
+                                Chờ xử lý
 
                             </a>
 

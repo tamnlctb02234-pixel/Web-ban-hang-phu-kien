@@ -23,6 +23,7 @@ namespace ASM1_SOF1022.Controllers
         {
             var sanPhams = _context.SanPhams
                 .Include(s => s.MaDanhMucNavigation)
+                .OrderByDescending(s => s.MaSanPham)
                 .AsQueryable();
 
             // TÌM KIẾM
@@ -61,6 +62,28 @@ namespace ASM1_SOF1022.Controllers
             }
 
             return View(sanPham);
+        }
+
+
+        public async Task<IActionResult> Categories()
+        {
+            var danhMucs = await _context.DanhMucs.ToListAsync();
+
+            return View(danhMucs);
+        }
+
+
+        public async Task<IActionResult> CategoryProducts(int id)
+        {
+            var sanPhams = await _context.SanPhams
+                .Include(x => x.MaDanhMucNavigation)
+                .Where(x => x.MaDanhMuc == id)
+                .OrderByDescending(x => x.MaSanPham)
+                .ToListAsync();
+
+            ViewBag.DanhMuc = await _context.DanhMucs.FindAsync(id);
+
+            return View(sanPhams);
         }
     }
 }

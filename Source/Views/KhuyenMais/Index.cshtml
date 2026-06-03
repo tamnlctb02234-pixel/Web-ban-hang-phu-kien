@@ -2,6 +2,30 @@
 
 <div class="container mt-5">
 
+    @if (TempData["success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            @TempData["success"]
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+
+            @TempData["error"]
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
     <div class="d-flex justify-content-between mb-4">
 
         <h2 class="fw-bold">
@@ -29,6 +53,7 @@
                         <th>% Giảm</th>
                         <th>Ngày bắt đầu</th>
                         <th>Ngày kết thúc</th>
+                        <th>Trạng thái</th>"
                         <th></th>
                     </tr>
                 </thead>
@@ -53,6 +78,33 @@
 
                             <td>
                                 @item.NgayKetThuc
+                            </td>
+
+                            <td>
+
+                                @{
+                                    var today = DateTime.Today;
+                                }
+
+                                @if(DateOnly.FromDateTime(DateTime.Today) < item.NgayBatDau)
+                                {
+                                    <span class="badge bg-info">
+                                        Sắp diễn ra
+                                    </span>
+                                }
+                                else if (DateOnly.FromDateTime(DateTime.Today) > item.NgayKetThuc)
+                                {
+                                    <span class="badge bg-secondary">
+                                        Đã kết thúc
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">
+                                        Đang diễn ra
+                                    </span>
+                                }
+
                             </td>
 
                             <td>
