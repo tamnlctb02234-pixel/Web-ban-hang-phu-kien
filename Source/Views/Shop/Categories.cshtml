@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ASM1_SOF1022.Models.DanhMuc>
+
+@{
+    ViewData["Title"] = "Danh mục";
+}
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        📂 Danh mục sản phẩm
+    </h2>
+
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body text-center">
+
+                        <h5>
+                            @item.TenDanhMuc
+                        </h5>
+
+                        <a asp-action="CategoryProducts"
+                           asp-route-id="@item.MaDanhMuc"
+                           class="btn btn-primary">
+
+                            Xem sản phẩm
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

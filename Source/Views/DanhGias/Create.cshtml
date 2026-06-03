@@ -1,0 +1,124 @@
+﻿@model ASM1_SOF1022.Models.DanhGium
+
+@{
+    ViewData["Title"] = "Thêm đánh giá";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">
+                ⭐ Thêm đánh giá
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                <!-- SẢN PHẨM -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Sản phẩm
+                    </label>
+
+                    <select asp-for="MaSanPham"
+                            class="form-select">
+
+                        <option value="">
+                            -- Chọn sản phẩm --
+                        </option>
+
+                        @foreach (var sp in ViewBag.SanPhams)
+                        {
+                            <option value="@sp.MaSanPham">
+                                @sp.TenSanPham
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- KHÁCH HÀNG -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Khách hàng
+                    </label>
+
+                    <select asp-for="MaKhachHang"
+                            class="form-select">
+
+                        <option value="">
+                            -- Chọn khách hàng --
+                        </option>
+
+                        @foreach (var kh in ViewBag.KhachHangs)
+                        {
+                            <option value="@kh.MaKhachHang">
+                                @kh.HoTen
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- SỐ SAO -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Số sao
+                    </label>
+
+                    <select asp-for="SoSao"
+                            class="form-select">
+
+                        <option value="1">★ 1 sao</option>
+                        <option value="2">★★ 2 sao</option>
+                        <option value="3">★★★ 3 sao</option>
+                        <option value="4">★★★★ 4 sao</option>
+                        <option value="5">★★★★★ 5 sao</option>
+
+                    </select>
+
+                </div>
+
+                <!-- BÌNH LUẬN -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Bình luận
+                    </label>
+
+                    <textarea asp-for="BinhLuan"
+                              class="form-control"
+                              rows="4"></textarea>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    Lưu đánh giá
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Quay lại
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
