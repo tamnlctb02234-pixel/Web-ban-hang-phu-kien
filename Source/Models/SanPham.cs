@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ASM1_SOF1022.Models;
 
@@ -7,10 +8,15 @@ public partial class SanPham
 {
     public int MaSanPham { get; set; }
 
+    [Required(ErrorMessage = "Tên sản phẩm không được để trống")]
     public string TenSanPham { get; set; } = null!;
 
+    [Range(0, double.MaxValue,
+       ErrorMessage = "Giá phải lớn hơn hoặc bằng 0")]
     public decimal Gia { get; set; }
 
+    [Range(0, int.MaxValue,
+     ErrorMessage = "Số lượng phải lớn hơn hoặc bằng 0")]
     public int SoLuong { get; set; }
 
     public string? MoTa { get; set; }

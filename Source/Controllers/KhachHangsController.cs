@@ -64,10 +64,33 @@ namespace ASM1_SOF1022.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(KhachHang khachHang)
         {
+            // Kiểm tra Email
+            bool emailDaTonTai = await _context.KhachHangs
+                .AnyAsync(x => x.Email == khachHang.Email);
+
+            if (emailDaTonTai)
+            {
+                ModelState.AddModelError(
+                    "Email",
+                    "Email này đã tồn tại."
+                );
+            }
+
+            // Kiểm tra Số điện thoại
+            bool sdtDaTonTai = await _context.KhachHangs
+                .AnyAsync(x => x.SoDienThoai == khachHang.SoDienThoai);
+
+            if (sdtDaTonTai)
+            {
+                ModelState.AddModelError(
+                    "SoDienThoai",
+                    "Số điện thoại này đã tồn tại."
+                );
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(khachHang);
-
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));

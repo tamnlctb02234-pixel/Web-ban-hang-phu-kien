@@ -62,7 +62,7 @@ namespace ASM1_SOF1022.Controllers
                 TempData["error"] =
                     "Sản phẩm hiện đã hết hàng";
 
-                return RedirectToAction("Index", "SanPhams");
+                return RedirectToAction("Index", "Shop");
             }
 
             // LẤY GIỎ HÀNG

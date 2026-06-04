@@ -23,19 +23,38 @@ namespace ASM1_SOF1022.Controllers
             return View(ds);
         }
 
-        // EDIT
+        // FORM SỬA
         public IActionResult Edit(int id)
         {
             var kho = _context.KhoHangs
                 .Include(k => k.MaSanPhamNavigation)
                 .FirstOrDefault(k => k.MaKho == id);
 
+            if (kho == null)
+            {
+                return NotFound();
+            }
+
             return View(kho);
         }
 
+        // XỬ LÝ SỬA
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(KhoHang kho)
         {
+            if (kho.SoLuongTon < 0)
+            {
+                ModelState.AddModelError(
+                    "SoLuongTon",
+                    "Số lượng tồn không được âm.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(kho);
+            }
+
             var khoHang = await _context.KhoHangs
                 .FindAsync(kho.MaKho);
 
@@ -44,19 +63,28 @@ namespace ASM1_SOF1022.Controllers
                 return NotFound();
             }
 
+            // Cập nhật kho
             khoHang.SoLuongTon = kho.SoLuongTon;
-
             khoHang.NgayCapNhat = DateTime.Now;
+
+            // Cập nhật luôn số lượng sản phẩm
+            var sanPham = await _context.SanPhams
+                .FindAsync(khoHang.MaSanPham);
+
+            if (sanPham != null)
+            {
+                sanPham.SoLuong = kho.SoLuongTon ?? 0;
+            }
 
             await _context.SaveChangesAsync();
 
             TempData["success"] =
-                "Cập nhật kho hàng thành công";
+                "Cập nhật kho hàng thành công.";
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-
+        // SẢN PHẨM SẮP HẾT HÀNG
         public IActionResult LowStock()
         {
             var ds = _context.KhoHangs

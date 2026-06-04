@@ -79,6 +79,28 @@
 
     <div class="row justify-content-center">
 
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                @TempData["success"]
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+            </div>
+        }
+
+        @if (TempData["error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                @TempData["error"]
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+            </div>
+        }
+
         <div class="col-lg-8">
 
             <div class="create-card">
@@ -107,6 +129,8 @@
                                class="form-control"
                                placeholder="Nhập tên sản phẩm..." />
 
+                        <span asp-validation-for="TenSanPham" class="text-danger"></span>
+
                     </div>
 
                     <div class="row">
@@ -121,6 +145,8 @@
                                    class="form-control"
                                    placeholder="Ví dụ: 150000" />
 
+                            <span asp-validation-for="Gia" class="text-danger"></span>
+
                         </div>
 
                         <div class="col-md-6 mb-4">
@@ -132,6 +158,8 @@
                             <input asp-for="SoLuong"
                                    class="form-control"
                                    placeholder="Ví dụ: 10" />
+
+                            <span asp-validation-for="SoLuong" class="text-danger"></span>
 
                         </div>
 

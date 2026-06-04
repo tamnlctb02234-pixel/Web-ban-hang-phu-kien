@@ -28,11 +28,33 @@ namespace ASM1_SOF1022.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(KhuyenMai km)
         {
+            bool TonTai = _context.KhuyenMais.Any(x => x.TenKhuyenMai == km.TenKhuyenMai);
+
+            if (TonTai)
+            {
+                ModelState.AddModelError("TenKhuyenMai", "Tên khuyến mãi đã tồn tại");
+            }
+
+            if (km.NgayBatDau > km.NgayKetThuc)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(km);
+            }
+
             _context.KhuyenMais.Add(km);
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            TempData["success"] =
+                "Thêm khuyến mãi thành công";
+
+            return RedirectToAction(nameof(Index));
         }
 
         // EDIT
@@ -44,13 +66,55 @@ namespace ASM1_SOF1022.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(KhuyenMai km)
         {
-            _context.KhuyenMais.Update(km);
+            // Kiểm tra ngày
+            if (km.NgayBatDau > km.NgayKetThuc)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc");
+            }
+
+            // Kiểm tra trùng tên (trừ chính bản ghi đang sửa)
+            bool trungTen = _context.KhuyenMais.Any(x =>
+                x.TenKhuyenMai == km.TenKhuyenMai
+                && x.MaKhuyenMai != km.MaKhuyenMai);
+
+            if (trungTen)
+            {
+                ModelState.AddModelError(
+                    "TenKhuyenMai",
+                    "Tên khuyến mãi đã tồn tại");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(km);
+            }
+
+            // Tìm khuyến mãi trong database
+            var khuyenMai = await _context.KhuyenMais
+                .FindAsync(km.MaKhuyenMai);
+
+            if (khuyenMai == null)
+            {
+                return NotFound();
+            }
+
+            // Cập nhật dữ liệu
+            khuyenMai.TenKhuyenMai = km.TenKhuyenMai;
+            khuyenMai.PhanTramGiam = km.PhanTramGiam;
+            khuyenMai.NgayBatDau = km.NgayBatDau;
+            khuyenMai.NgayKetThuc = km.NgayKetThuc;
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            TempData["success"] =
+                "Cập nhật khuyến mãi thành công";
+
+            return RedirectToAction(nameof(Index));
         }
 
         // DELETE

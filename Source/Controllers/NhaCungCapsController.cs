@@ -28,6 +28,11 @@ namespace ASM1_SOF1022.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NhaCungCap ncc)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(ncc);
+            }
+
             _context.NhaCungCaps.Add(ncc);
 
             await _context.SaveChangesAsync();
@@ -58,11 +63,33 @@ namespace ASM1_SOF1022.Controllers
         {
             var ncc = _context.NhaCungCaps.Find(id);
 
+            if (ncc == null)
+            {
+                TempData["error"] =
+                    "Nhà cung cấp không tồn tại.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            bool dangDuocSuDung = _context.SanPhams
+                .Any(x => x.MaNhaCungCap == id);
+
+            if (dangDuocSuDung)
+            {
+                TempData["error"] =
+                    "Không thể xóa nhà cung cấp vì đang có sản phẩm thuộc nhà cung cấp này.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
             _context.NhaCungCaps.Remove(ncc);
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index");
+            TempData["success"] =
+                "Xóa nhà cung cấp thành công.";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
