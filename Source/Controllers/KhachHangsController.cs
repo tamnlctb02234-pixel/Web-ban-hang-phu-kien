@@ -195,6 +195,14 @@ namespace ASM1_SOF1022.Controllers
                 return NotFound();
             }
 
+            //Chặn xóa tài khoản admin
+
+            if(khachHang.MaVaiTroNavigation != null && khachHang.MaVaiTroNavigation.TenVaiTro == "Admin")
+            {
+                TempData["error"] = "Không thể xóa tài khoản quản trị viên (Admin) trong bất kì trường hợp nào";
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(khachHang);
         }
 
@@ -202,11 +210,21 @@ namespace ASM1_SOF1022.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var khachHang = await _context.KhachHangs.FindAsync(id);
+            var khachHang = await _context.KhachHangs
+                .Include(k => k.MaVaiTroNavigation)
+                .FirstOrDefaultAsync(m => m.MaKhachHang == id);
+
 
             if (khachHang == null)
             {
                 return NotFound();
+            }
+
+            // CHỐT CHẶN BẢO MẬT BACKEND: Nghiêm cấm xóa tài khoản có vai trò Admin
+            if (khachHang.MaVaiTroNavigation != null && khachHang.MaVaiTroNavigation.TenVaiTro == "Admin")
+            {
+                TempData["error"] = "Hệ thống từ chối xóa tài khoản Quản trị viên (Admin).";
+                return RedirectToAction(nameof(Index));
             }
 
             // Nếu có đơn hàng thì không cho xóa

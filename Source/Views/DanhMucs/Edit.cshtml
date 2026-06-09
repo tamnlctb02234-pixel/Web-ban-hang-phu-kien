@@ -1,0 +1,135 @@
+﻿@model ASM1_SOF1022.Models.DanhMuc
+
+@{
+    ViewData["Title"] = "Sửa danh mục";
+}
+
+<style>
+
+    body {
+        background-color: #fffafc;
+    }
+
+    .edit-card {
+        background: white;
+        border-radius: 25px;
+        box-shadow: 0 10px 30px rgba(255, 77, 141, 0.08);
+        padding: 35px;
+    }
+
+    .page-title {
+        color: #ff4d8d;
+        font-weight: bold;
+    }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+    .btn-pink {
+        background: #ff4d8d;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+
+        .btn-pink:hover {
+            background: #ff2f78;
+            color: white;
+        }
+
+    .btn-back {
+        background: #f1f1f1;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+
+</style>
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="edit-card">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="page-title">
+                        ✏️ Sửa danh mục
+                    </h2>
+
+                    <p class="text-muted">
+                        Cập nhật thông tin danh mục sản phẩm
+                    </p>
+
+                </div>
+
+                <form asp-action="Edit">
+
+                    <input type="hidden"
+                           asp-for="MaDanhMuc" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label asp-for="TenDanhMuc"
+                               class="form-label">
+                            Tên danh mục
+                        </label>
+
+                        <input asp-for="TenDanhMuc"
+                               class="form-control"
+                               placeholder="Nhập tên danh mục..." />
+
+                        <span asp-validation-for="TenDanhMuc"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                                class="btn btn-pink">
+
+                            💾 Lưu thay đổi
+
+                        </button>
+
+                        <a asp-action="Index"
+                           class="btn btn-back">
+
+                            ← Quay lại
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

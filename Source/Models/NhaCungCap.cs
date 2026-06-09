@@ -10,7 +10,8 @@ public partial class NhaCungCap
 
     public string TenNhaCungCap { get; set; } = null!;
 
-    [StringLength(15,ErrorMessage ="Số điện thoại phải từ 1 đến 15 ký tự")]
+    [RegularExpression(@"^[0-9]+$",ErrorMessage ="Số điện thoại chỉ được chứa kí tự số")]
+    [StringLength(11,MinimumLength =10,ErrorMessage ="Số điện thoại phải từ 10 đến 11 ký tự")]
     public string? SoDienThoai { get; set; }
 
     [Required(ErrorMessage ="Vui lòng nhập địa chỉ của bạn")]

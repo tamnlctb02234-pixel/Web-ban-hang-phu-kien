@@ -5,7 +5,6 @@
 }
 
 <style>
-
     .page-title {
         color: #ff4d8d;
         font-weight: bold;
@@ -31,60 +30,44 @@
         .table thead th {
             color: #ff4d8d;
         }
-
 </style>
 
 <div class="container mt-5">
 
+    @* ĐÃ THÊM CLASS auto-close-alert ĐỂ JAVASCRIPT NHẬN DIỆN *@
     @if (TempData["success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show">
+        <div class="alert alert-success alert-dismissible fade show auto-close-alert" role="alert">
             @TempData["success"]
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
     @if (TempData["error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show">
+        <div class="alert alert-danger alert-dismissible fade show auto-close-alert" role="alert">
             @TempData["error"]
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-
         <div>
             <h2 class="page-title">
                 👤 Quản lý khách hàng
             </h2>
-
             <p class="text-muted">
                 Danh sách khách hàng trong hệ thống
             </p>
         </div>
-
-        <a asp-action="Create"
-           class="btn btn-pink">
-
+        <a asp-action="Create" class="btn btn-pink">
             + Thêm khách hàng
-
         </a>
-
     </div>
 
     <div class="card shadow border-0 rounded-4">
-
         <div class="card-body">
-
             <table class="table align-middle">
-
                 <thead>
                     <tr>
                         <th>Họ tên</th>
@@ -95,64 +78,48 @@
                         <th width="220">Chức năng</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                     @foreach (var item in Model)
                     {
                         <tr>
-
                             <td>@item.HoTen</td>
-
                             <td>@item.Email</td>
-
                             <td>@item.SoDienThoai</td>
-
                             <td>@item.DiaChi</td>
-
                             <td>
                                 <span class="badge bg-primary">
                                     @item.MaVaiTroNavigation?.TenVaiTro
                                 </span>
                             </td>
-
                             <td>
+                                <a asp-action="Details" asp-route-id="@item.MaKhachHang" class="btn btn-info btn-sm">Chi tiết</a>
+                                <a asp-action="Edit" asp-route-id="@item.MaKhachHang" class="btn btn-warning btn-sm">Sửa</a>
 
-                                <a asp-action="Details"
-                                   asp-route-id="@item.MaKhachHang"
-                                   class="btn btn-info btn-sm">
-
-                                    Chi tiết
-
-                                </a>
-
-                                <a asp-action="Edit"
-                                   asp-route-id="@item.MaKhachHang"
-                                   class="btn btn-warning btn-sm">
-
-                                    Sửa
-
-                                </a>
-
-                                <a asp-action="Delete"
-                                   asp-route-id="@item.MaKhachHang"
-                                   class="btn btn-danger btn-sm">
-
-                                    Xóa
-
-                                </a>
-
+                                @* ẨN NÚT XÓA NẾU LÀ TÀI KHOẢN ADMIN *@
+                                @if (item.MaVaiTroNavigation?.TenVaiTro != "Admin")
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.MaKhachHang" class="btn btn-danger btn-sm">Xóa</a>
+                                }
                             </td>
-
                         </tr>
                     }
-
                 </tbody>
-
             </table>
-
         </div>
-
     </div>
-
 </div>
+
+@* ĐOẠN SCRIPT TỰ ĐỘNG ĐÓNG THÔNG BÁO SAU 2.5 GIÂY *@
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var alerts = document.querySelectorAll('.auto-close-alert');
+            alerts.forEach(function (alert) {
+                setTimeout(function () {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 2500); // 2500 mili giây = 2.5 giây
+            });
+        });
+    </script>
+}

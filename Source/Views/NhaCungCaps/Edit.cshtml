@@ -1,0 +1,74 @@
+﻿@model ASM1_SOF1022.Models.NhaCungCap
+
+@{
+    ViewData["Title"] = "Sửa nhà cung cấp";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <h2 class="text-center text-warning mb-4">
+                        ✏️ Sửa nhà cung cấp
+                    </h2>
+
+                    <form asp-action="Edit" method="post">
+                        @* Khóa chính ẩn để gửi lên controller định danh đối tượng cần sửa *@
+                        <input type="hidden" asp-for="MaNhaCungCap" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên nhà cung cấp</label>
+                            <input asp-for="TenNhaCungCap" class="form-control" />
+                            <span asp-validation-for="TenNhaCungCap" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Số điện thoại</label>
+                            @* type="tel" và chặn trực tiếp không cho gõ chữ *@
+                            <input asp-for="SoDienThoai" type="tel" onkeypress="return isNumberKey(event)" class="form-control" />
+                            <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ</label>
+                            <input asp-for="DiaChi" class="form-control" />
+                            <span asp-validation-for="DiaChi" class="text-danger"></span>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <a asp-action="Index" class="btn btn-outline-secondary w-100">Quay lại</a>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-warning w-100">Lưu thay đổi</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Kích hoạt kiểm tra lỗi phía Client không cần tải lại trang *@
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Hàm chặn gõ ký tự chữ, chỉ chấp nhận số trực tiếp trên ô SĐT
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
