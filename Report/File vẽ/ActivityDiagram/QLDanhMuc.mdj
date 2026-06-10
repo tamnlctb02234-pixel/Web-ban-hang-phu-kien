@@ -3587,9 +3587,9 @@
 													"parentStyle": true,
 													"left": 45,
 													"top": 215,
-													"width": 279.814453125,
+													"width": 280.5888671875,
 													"height": 13,
-													"text": "Thay đổi dữ liệu Danh mục và bấm Lưu"
+													"text": "Thay đổi dữ liệu Danh mục và bấm Lưu / Hủy"
 												},
 												{
 													"_type": "LabelView",
@@ -3625,7 +3625,7 @@
 											"parentStyle": true,
 											"left": 40,
 											"top": 208,
-											"width": 289.814453125,
+											"width": 290.5888671875,
 											"height": 25,
 											"stereotypeLabel": {
 												"$ref": "AAAAAAGefLW2sjYblpM="
@@ -3649,7 +3649,7 @@
 									"containerChangeable": true,
 									"left": 40,
 									"top": 208,
-									"width": 288.814453125,
+									"width": 289.5888671875,
 									"height": 41,
 									"nameCompartment": {
 										"$ref": "AAAAAAGefLW2sjYaZe0="
@@ -4980,7 +4980,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"parentStyle": false,
-											"left": 386,
+											"left": 387,
 											"top": 183,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -5002,7 +5002,7 @@
 											"visible": null,
 											"font": "Arial;13;0",
 											"parentStyle": false,
-											"left": 384,
+											"left": 385,
 											"top": 168,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -5024,7 +5024,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"parentStyle": false,
-											"left": 389,
+											"left": 390,
 											"top": 212,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -5044,7 +5044,7 @@
 										"$ref": "AAAAAAGefLW2sjYZwG0="
 									},
 									"lineStyle": 1,
-									"points": "330:211;447:198",
+									"points": "331:211;447:198",
 									"showVisibility": true,
 									"nameLabel": {
 										"$ref": "AAAAAAGekNEdUhSCMz8="
@@ -6160,7 +6160,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGefLW2szaLB7E="
 									},
-									"name": "Thay đổi dữ liệu Danh mục và bấm Lưu"
+									"name": "Thay đổi dữ liệu Danh mục và bấm Lưu / Hủy"
 								},
 								{
 									"_type": "UMLAction",
