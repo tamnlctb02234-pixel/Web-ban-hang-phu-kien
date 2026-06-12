@@ -2,27 +2,20 @@
 
 <div class="container mt-5">
 
+    @* ĐÃ THÊM CLASS auto-close-alert ĐỂ JAVASCRIPT NHẬN DIỆN *@
     @if (TempData["success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show">
-
+        <div class="alert alert-success alert-dismissible fade show auto-close-alert" role="alert">
             @TempData["success"]
-
-            <button type="button" class="btn-close" data-bs-dismiss="alert">
-            </button>
-
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
     @if (TempData["error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show">
-
+        <div class="alert alert-danger alert-dismissible fade show auto-close-alert" role="alert">
             @TempData["error"]
-
-            <button type="button" class="btn-close" data-bs-dismiss="alert">
-            </button>
-
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
@@ -139,3 +132,18 @@
     </div>
 
 </div>
+
+@* ĐOẠN SCRIPT TỰ ĐỘNG ĐÓNG THÔNG BÁO SAU 2.5 GIÂY *@
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var alerts = document.querySelectorAll('.auto-close-alert');
+            alerts.forEach(function (alert) {
+                setTimeout(function () {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 2500); // 2500 mili giây = 2.5 giây
+            });
+        });
+    </script>
+}
