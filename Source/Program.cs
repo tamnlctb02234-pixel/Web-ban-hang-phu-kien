@@ -6,9 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+
+// Get connection string from environment variable or appsettings
+var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING") 
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<ShopPhuKienDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 app.UseSession();
@@ -31,3 +35,4 @@ app.MapControllerRoute(
 
 
 app.Run();
+
